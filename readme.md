@@ -6,7 +6,7 @@ A basic Where's Waldo game with a tutorial, beginner, and hard modes.
 
 - [@joevellella](https://www.github.com/valhallaco)
 
-## Features
+## Project Tools
 
 - [Vite](https://vitest.dev/)
 - [Vitest](https://www.eternaldev.com/blog/testing-a-react-application-with-vitest/)
