@@ -27,12 +27,21 @@ ReactModal.setAppElement(document.getElementById('root'))
 
 function App() {
   const [modalIsOpen, setIsOpen] = React.useState(false)
+  const [selectedData, setSelectedData] = React.useState({
+    x: null,
+    y: null,
+    name: null,
+  })
 
   function openModal() {
     setIsOpen(true)
   }
   function closeModal() {
     setIsOpen(false)
+  }
+  function closeResetModal() {
+    setIsOpen(false)
+    setSelectedData({ x: null, y: null, name: null })
   }
 
   function updateModalLocation(left, top) {
@@ -47,6 +56,9 @@ function App() {
       event.pageY - event.target.offsetTop,
     ]
 
+    updateModalLocation(clickPos[0], clickPos[1])
+    openModal()
+
     const width = event.target.clientWidth
     const height = event.target.clientHeight
 
@@ -55,8 +67,11 @@ function App() {
       (clickPos[1] / height) * 100,
     ]
 
-    updateModalLocation(clickPos[0], clickPos[1])
-    openModal()
+    setSelectedData((prevData) => ({
+      ...prevData,
+      x: posPercent[0],
+      y: posPercent[1],
+    }))
 
     const targetJackson = {
       topLeft: [36.25, 61.7],
@@ -71,10 +86,19 @@ function App() {
       posPercent[1] <= targetJackson.botRight[1] &&
       posPercent[1] >= targetJackson.topLeft[1]
     ) {
-      console.log('Identified Jackson!')
+      // console.log('Identified Jackson!')
     } else {
-      console.log('Did not find Jackson')
+      // console.log('Did not find Jackson')
     }
+  }
+
+  function addName(event) {
+    setSelectedData((prevData) => ({
+      ...prevData,
+      name: event.target.innerText,
+    }))
+    closeModal()
+    // Check server for results!
   }
 
   return (
@@ -90,14 +114,18 @@ function App() {
       <ReactModal
         isOpen={modalIsOpen}
         style={customStyles}
-        onRequestClose={closeModal}
+        onRequestClose={closeResetModal}
         shouldCloseOnOverlayClick
         shouldCloseonEsc
         parentSelector={() => document.querySelector('.modalParent')}
       >
         <div className="flex w-24 flex-col bg-red-100 text-xs">
-          <button type="button">Jackson</button>
-          <button type="button">Jake</button>
+          <button onClick={addName} type="button">
+            Jackson
+          </button>
+          <button onClick={addName} type="button">
+            Maggie
+          </button>
         </div>
       </ReactModal>
     </div>
