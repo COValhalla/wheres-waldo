@@ -25,32 +25,14 @@ const siteImages = {
   tutorial: 'jackson.jpeg',
 }
 
-// Download selected image
+// Retrieve image from firebase
 getDownloadURL(ref(storage, siteImages.tutorial))
   .then((url) => {
-    // `url` is the download URL for 'images/stars.jpg'
-
-    // Or inserted into an <img> element
     const img = document.getElementById('myimg')
     img.setAttribute('src', url)
   })
   .catch((error) => {
-    // Handle any errors
     console.log(error)
-  })
-
-// Pull coords from database
-const dbRef = dataRef(database)
-get(child(dbRef, `tutorial`))
-  .then((snapshot) => {
-    if (snapshot.exists()) {
-      console.log(snapshot.val())
-    } else {
-      console.log('No data available')
-    }
-  })
-  .catch((error) => {
-    console.error(error)
   })
 
 const customStyles = {
@@ -98,6 +80,36 @@ function App() {
     customStyles.content.top = top
   }
 
+  function pullData() {
+    // Retrieve coords from firebase
+    const dbRef = dataRef(database)
+    get(child(dbRef, `tutorial`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val()
+          checkResult(data)
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  function checkResult(data) {
+    // console.log('checking result: ', data)
+
+    if (
+      selectedData.x <= data.jackson.topRight[0] &&
+      selectedData.x >= data.jackson.topLeft[0] &&
+      selectedData.y <= data.jackson.botRight[1] &&
+      selectedData.y >= data.jackson.topLeft[1]
+    ) {
+      console.log('Identified Jackson!')
+    } else {
+      console.log('Did not find Jackson')
+    }
+  }
+
   // Determines client x/y and resulting click position x/y
   function checkPos(event) {
     const clickPos = [
@@ -128,17 +140,6 @@ function App() {
       botLeft: [36.25, 100],
       botRight: [61.25, 100],
     }
-
-    if (
-      posPercent[0] <= targetJackson.topRight[0] &&
-      posPercent[0] >= targetJackson.topLeft[0] &&
-      posPercent[1] <= targetJackson.botRight[1] &&
-      posPercent[1] >= targetJackson.topLeft[1]
-    ) {
-      // console.log('Identified Jackson!')
-    } else {
-      // console.log('Did not find Jackson')
-    }
   }
 
   function addName(event) {
@@ -148,6 +149,7 @@ function App() {
     }))
     closeModal()
     // Check server for results!
+    pullData()
   }
 
   return (
