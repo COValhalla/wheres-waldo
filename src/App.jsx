@@ -3,18 +3,55 @@
 import React from 'react'
 import ReactModal from 'react-modal'
 import { initializeApp } from 'firebase/app'
-import jackson from './assets/jackson.jpeg'
+import { getStorage, ref, getDownloadURL } from 'firebase/storage'
+import { getDatabase, ref as dataRef, child, get } from 'firebase/database'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA69h9jNghUE7H6x3BzECQbLybPAkLNihc',
   authDomain: 'wheres-waldo-6b3b4.firebaseapp.com',
   projectId: 'wheres-waldo-6b3b4',
-  storageBucket: 'wheres-waldo-6b3b4.appspot.com',
+  storageBucket: 'gs://wheres-waldo-6b3b4.appspot.com/',
+  databaseURL: 'https://wheres-waldo-6b3b4-default-rtdb.firebaseio.com/',
   messagingSenderId: '680463319079',
   appId: '1:680463319079:web:6635a772da8918eee98e02',
 }
 
 const app = initializeApp(firebaseConfig)
+const storage = getStorage(app)
+const database = getDatabase(app)
+
+// Paths for each image
+const siteImages = {
+  tutorial: 'jackson.jpeg',
+}
+
+// Download selected image
+getDownloadURL(ref(storage, siteImages.tutorial))
+  .then((url) => {
+    // `url` is the download URL for 'images/stars.jpg'
+
+    // Or inserted into an <img> element
+    const img = document.getElementById('myimg')
+    img.setAttribute('src', url)
+  })
+  .catch((error) => {
+    // Handle any errors
+    console.log(error)
+  })
+
+// Pull coords from database
+const dbRef = dataRef(database)
+get(child(dbRef, `tutorial`))
+  .then((snapshot) => {
+    if (snapshot.exists()) {
+      console.log(snapshot.val())
+    } else {
+      console.log('No data available')
+    }
+  })
+  .catch((error) => {
+    console.error(error)
+  })
 
 const customStyles = {
   overlay: {
@@ -117,8 +154,8 @@ function App() {
     <div>
       <div className="modalParent relative w-1/2 bg-red-500">
         <img
+          id="myimg"
           className="modalparent absolute m-12 w-auto"
-          src={jackson}
           onClick={checkPos}
           alt=""
         />
@@ -135,9 +172,9 @@ function App() {
           <button onClick={addName} type="button">
             Jackson
           </button>
-          <button onClick={addName} type="button">
+          {/* <button onClick={addName} type="button">
             Maggie
-          </button>
+          </button> */}
         </div>
       </ReactModal>
     </div>
