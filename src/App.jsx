@@ -1,10 +1,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import { initializeApp } from 'firebase/app'
 import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 import { getDatabase, ref as dataRef, child, get } from 'firebase/database'
+import Home from './components/Home'
+import Game from './components/Game'
+import Info from './components/Info'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA69h9jNghUE7H6x3BzECQbLybPAkLNihc',
@@ -22,11 +26,13 @@ const database = getDatabase(app)
 
 // Paths for each image
 const siteImages = {
-  tutorial: 'jackson.jpeg',
+  easy: 'easy.jpg',
+  medium: 'medium.jpeg',
+  hard: 'hard.jpeg',
 }
 
 // Retrieve image from firebase
-getDownloadURL(ref(storage, siteImages.tutorial))
+getDownloadURL(ref(storage, siteImages.easy))
   .then((url) => {
     const img = document.getElementById('myimg')
     img.setAttribute('src', url)
@@ -153,33 +159,43 @@ function App() {
   }
 
   return (
-    <div>
-      <div className="modalParent relative w-1/2 bg-red-500">
-        <img
-          id="myimg"
-          className="modalparent absolute m-12 w-auto"
-          onClick={checkPos}
-          alt=""
-        />
+    <BrowserRouter>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/info" element={<Info />} />
+        </Routes>
       </div>
-      <ReactModal
-        isOpen={modalIsOpen}
-        style={customStyles}
-        onRequestClose={closeResetModal}
-        shouldCloseOnOverlayClick
-        shouldCloseonEsc
-        parentSelector={() => document.querySelector('.modalParent')}
-      >
-        <div className="flex w-24 flex-col bg-red-100 text-xs">
-          <button onClick={addName} type="button">
-            Jackson
-          </button>
-          {/* <button onClick={addName} type="button">
-            Maggie
-          </button> */}
-        </div>
-      </ReactModal>
-    </div>
+    </BrowserRouter>
+
+    // <div>
+    //   <div className="modalParent relative w-1/2 bg-red-500">
+    //     <img
+    //       id="myimg"
+    //       className="modalparent absolute m-12 w-auto"
+    //       onClick={checkPos}
+    //       alt=""
+    //     />
+    //   </div>
+    //   <ReactModal
+    //     isOpen={modalIsOpen}
+    //     style={customStyles}
+    //     onRequestClose={closeResetModal}
+    //     shouldCloseOnOverlayClick
+    //     shouldCloseonEsc
+    //     parentSelector={() => document.querySelector('.modalParent')}
+    //   >
+    //     <div className="flex w-24 flex-col bg-red-100 text-xs">
+    //       <button onClick={addName} type="button">
+    //         Jackson
+    //       </button>
+    //       {/* <button onClick={addName} type="button">
+    //         Maggie
+    //       </button> */}
+    //     </div>
+    //   </ReactModal>
+    // </div>
   )
 }
 
