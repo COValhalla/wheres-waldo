@@ -2,7 +2,19 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react'
 import ReactModal from 'react-modal'
+import { initializeApp } from 'firebase/app'
 import jackson from './assets/jackson.jpeg'
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyA69h9jNghUE7H6x3BzECQbLybPAkLNihc',
+  authDomain: 'wheres-waldo-6b3b4.firebaseapp.com',
+  projectId: 'wheres-waldo-6b3b4',
+  storageBucket: 'wheres-waldo-6b3b4.appspot.com',
+  messagingSenderId: '680463319079',
+  appId: '1:680463319079:web:6635a772da8918eee98e02',
+}
+
+const app = initializeApp(firebaseConfig)
 
 const customStyles = {
   overlay: {
