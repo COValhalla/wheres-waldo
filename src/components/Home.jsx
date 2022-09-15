@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="flex h-screen w-full flex-col">
       <nav className="flex items-center justify-around bg-slate-800 p-5 text-xl text-white">
         <button
           className="rounded p-1 duration-200 ease-in hover:bg-gray-500"
@@ -20,7 +20,7 @@ export default function Home() {
         </button>
       </nav>
       {/* Main background */}
-      <div className="h-screen w-full  bg-slate-700 ">
+      <div className="flex flex-1  bg-slate-700 ">
         {/* Cards Container */}
         <div className="flex justify-center gap-8 text-white ">
           <button type="button">Easy</button>
