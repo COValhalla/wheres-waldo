@@ -1,29 +1,9 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 import React from 'react'
-import ReactModal from 'react-modal'
 import { Link, useLocation } from 'react-router-dom'
 import { ImageContext } from '../context/ImageContext'
-
-// Modal styling
-const customStyles = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.0)',
-  },
-  content: {
-    position: 'absolute',
-    left: '36.25%',
-    top: '61.67%',
-    right: 'auto',
-    bottom: 'auto',
-    transform: 'translate(50%, 140%)',
-    padding: 0,
-  },
-}
-ReactModal.setAppElement(document.getElementById('root'))
 
 export default function Game() {
   const context = React.useContext(ImageContext)
@@ -31,28 +11,11 @@ export default function Game() {
   const location = useLocation()
   const { mode } = location.state
 
-  const [modalIsOpen, setIsOpen] = React.useState(false)
   const [selectedData, setSelectedData] = React.useState({
     x: null,
     y: null,
     name: null,
   })
-
-  function openModal() {
-    setIsOpen(true)
-  }
-  function closeModal() {
-    setIsOpen(false)
-  }
-  function closeResetModal() {
-    setIsOpen(false)
-    setSelectedData({ x: null, y: null, name: null })
-  }
-
-  function updateModalLocation(left, top) {
-    customStyles.content.left = left
-    customStyles.content.top = top
-  }
 
   function pullData() {
     // Retrieve coords from firebase
@@ -91,9 +54,6 @@ export default function Game() {
       event.pageY - event.target.offsetTop,
     ]
 
-    updateModalLocation(clickPos[0], clickPos[1])
-    openModal()
-
     const width = event.target.clientWidth
     const height = event.target.clientHeight
 
@@ -114,13 +74,12 @@ export default function Game() {
       ...prevData,
       name: event.target.innerText,
     }))
-    closeModal()
     // Check server for results!
     pullData()
   }
 
   return (
-    <div className="flex h-screen w-full flex-col">
+    <div className="flex flex-col">
       <nav className="flex items-center justify-around bg-slate-800 p-5 text-xl text-white">
         <Link
           to="/"
@@ -138,33 +97,15 @@ export default function Game() {
           Info
         </Link>
       </nav>
-      <div>
-        <div className="modalParent relative w-1/2 bg-red-500">
+      <div className="mx-auto flex w-full flex-1 bg-slate-700">
+        <div className="relative flex flex-1 justify-center">
           <img
-            // id="myimg"
             src={context[mode]}
-            className="modalparent absolute m-12 w-auto"
+            className="absolute m-12 w-5/6 rounded-2xl "
             onClick={checkPos}
             alt=""
           />
         </div>
-        <ReactModal
-          isOpen={modalIsOpen}
-          style={customStyles}
-          onRequestClose={closeResetModal}
-          shouldCloseOnOverlayClick
-          shouldCloseonEsc
-          parentSelector={() => document.querySelector('.modalParent')}
-        >
-          <div className="flex w-24 flex-col bg-red-100 text-xs">
-            <button onClick={addName} type="button">
-              Jackson
-            </button>
-            {/* <button onClick={addName} type="button">
-            Maggie
-          </button> */}
-          </div>
-        </ReactModal>
       </div>
     </div>
   )
