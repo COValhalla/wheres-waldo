@@ -97,15 +97,16 @@ export default function Game() {
           Info
         </Link>
       </nav>
-      <div className="mx-auto flex w-full flex-1 bg-slate-700">
-        <div className="relative flex flex-1 justify-center">
-          <img
-            src={context[mode]}
-            className="absolute m-12 w-5/6 rounded-2xl "
-            onClick={checkPos}
-            alt=""
-          />
+      <div className="flex flex-col items-center gap-8 bg-slate-700 py-8">
+        <div>
+          <h3 className="text-2xl text-white">Find Waldo!</h3>
         </div>
+        <img
+          src={context[mode]}
+          className="w-5/6 rounded-2xl"
+          onClick={checkPos}
+          alt=""
+        />
       </div>
     </div>
   )
