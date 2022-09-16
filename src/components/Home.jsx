@@ -30,29 +30,35 @@ export default function Home() {
           style={{
             backgroundImage: `url(${easy})`,
           }}
-          className=" h-1/2 w-1/4 scale-90 rounded bg-cover bg-center bg-no-repeat text-3xl font-bold text-black duration-200 hover:scale-100"
+          className="h-1/2 w-1/4 scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
           type="button"
         >
-          Easy
+          <p className="text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+            Easy
+          </p>
         </button>
 
         <button
           style={{
             backgroundImage: `url(${medium})`,
           }}
-          className="h-1/2 w-1/4 scale-90 rounded bg-cover bg-center bg-no-repeat text-3xl font-bold text-black duration-200 hover:scale-100"
+          className="h-1/2 w-1/4 scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
           type="button"
         >
-          Medium
+          <p className="text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+            Medium
+          </p>
         </button>
         <button
           style={{
             backgroundImage: `url(${hard})`,
           }}
-          className="h-1/2 w-1/4 scale-90 rounded bg-cover bg-center bg-no-repeat text-3xl font-bold text-black  duration-200 hover:scale-100"
+          className="h-1/2 w-1/4 scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
           type="button"
         >
-          Hard
+          <p className="text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+            Hard
+          </p>
         </button>
       </div>
     </div>
