@@ -26,8 +26,10 @@ export default function Game() {
         selectedData.y <= context.Coords[mode].botRight[1] &&
         selectedData.y >= context.Coords[mode].topLeft[1]
       ) {
+        // Add modal popup for entering leadboard name/score.
         console.log('Found Waldo!')
       } else {
+        // Update nav main to notify did not find
         console.log('Did not find Waldo.')
       }
     }
@@ -85,7 +87,7 @@ export default function Game() {
           Info
         </Link>
       </nav>
-      <div className="flex flex-col items-center gap-8 bg-slate-700 py-8">
+      <div className="flex min-h-screen flex-col items-center gap-8 bg-slate-700 py-8">
         <img
           src={context.Images[mode]}
           className="w-5/6 rounded-2xl"
