@@ -3,43 +3,12 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ReactModal from 'react-modal'
-import { initializeApp } from 'firebase/app'
-import { getStorage, ref, getDownloadURL } from 'firebase/storage'
-import { getDatabase, ref as dataRef, child, get } from 'firebase/database'
 import Home from './components/Home'
 import Game from './components/Game'
 import Info from './components/Info'
+import { ImageContextProvider } from './context/ImageContext'
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyA69h9jNghUE7H6x3BzECQbLybPAkLNihc',
-  authDomain: 'wheres-waldo-6b3b4.firebaseapp.com',
-  projectId: 'wheres-waldo-6b3b4',
-  storageBucket: 'gs://wheres-waldo-6b3b4.appspot.com/',
-  databaseURL: 'https://wheres-waldo-6b3b4-default-rtdb.firebaseio.com/',
-  messagingSenderId: '680463319079',
-  appId: '1:680463319079:web:6635a772da8918eee98e02',
-}
-
-const app = initializeApp(firebaseConfig)
-const storage = getStorage(app)
-const database = getDatabase(app)
-
-// Paths for each image
-const siteImages = {
-  easy: 'easy.jpg',
-  medium: 'medium.jpeg',
-  hard: 'hard.jpeg',
-}
-
-// Retrieve image from firebase
-getDownloadURL(ref(storage, siteImages.easy))
-  .then((url) => {
-    const img = document.getElementById('myimg')
-    img.setAttribute('src', url)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+// Retrieve images from firebase
 
 const customStyles = {
   overlay: {
@@ -159,15 +128,17 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <div>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/game" element={<Game />} />
-          <Route path="/info" element={<Info />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <ImageContextProvider>
+      <BrowserRouter>
+        <div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/game" element={<Game />} />
+            <Route path="/info" element={<Info />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </ImageContextProvider>
 
     // <div>
     //   <div className="modalParent relative w-1/2 bg-red-500">
