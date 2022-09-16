@@ -9,22 +9,16 @@ import { ImageContext } from '../context/ImageContext'
 
 const customStyles = {
   overlay: {
-    position: 'fixed',
-    width: '40%',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
     backgroundColor: 'rgba(255, 255, 255, 0.0)',
   },
   content: {
-    position: 'absolute',
-    float: 'left',
-    left: '50%',
     top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(50%, -50%)',
-    padding: 0,
+    padding: '0',
+    transform: 'translate(-50%, -50%)',
   },
 }
 
@@ -144,8 +138,31 @@ export default function Game() {
         shouldCloseOnOverlayClick
         shouldCloseonEsc
       >
-        <div>
-          <h1>The modal should be opened!</h1>
+        <div className="flex flex-col bg-slate-800 p-6  text-white">
+          <h3 className="border-b-4 text-2xl">
+            You finished in 10.03 seconds!
+          </h3>
+          <h4 className=" pt-8 text-lg">
+            Submit your score to the global leaderboard!
+          </h4>
+          <form className="flex flex-col" action="#">
+            <label htmlFor="name">Name</label>
+            <input
+              className="w-3/4 rounded bg-slate-700 px-2"
+              type="text"
+              name="name"
+              id="name"
+            />
+            <div className="my-6 border-b-4"></div>
+            <div className="flex justify-end gap-8">
+              <button className="w-1/4 rounded bg-red-500 py-2" type="submit">
+                Cancel
+              </button>
+              <button className="w-1/4 rounded bg-green-600 py-2" type="submit">
+                Submit Score
+              </button>
+            </div>
+          </form>
         </div>
       </ReactModal>
     </div>
