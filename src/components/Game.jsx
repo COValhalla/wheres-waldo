@@ -82,7 +82,7 @@ export default function Game() {
       </nav>
       <div className="flex flex-col items-center gap-8 bg-slate-700 py-8">
         <img
-          src={context[mode]}
+          src={context.Images[mode]}
           className="w-5/6 rounded-2xl"
           onClick={checkWin}
           alt=""

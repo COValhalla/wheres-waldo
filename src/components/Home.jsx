@@ -26,7 +26,7 @@ export default function Home() {
         {/* Cards Container */}
         <Link
           style={{
-            backgroundImage: `url(${context.easy})`,
+            backgroundImage: `url(${context.Images.easy})`,
           }}
           className="h-1/2 w-1/4 scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
           to="/game"
@@ -38,7 +38,7 @@ export default function Home() {
         </Link>
         <Link
           style={{
-            backgroundImage: `url(${context.medium})`,
+            backgroundImage: `url(${context.Images.medium})`,
           }}
           className="h-1/2 w-1/4 scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
           to="/game"
@@ -50,7 +50,7 @@ export default function Home() {
         </Link>
         <Link
           style={{
-            backgroundImage: `url(${context.hard})`,
+            backgroundImage: `url(${context.Images.hard})`,
           }}
           className="h-1/2 w-1/4 scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
           to="/game"
