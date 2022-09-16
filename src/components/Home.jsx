@@ -1,13 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ImageContext } from '../context/ImageContext'
-import easy from '../assets/easy.jpg'
-import medium from '../assets/medium.jpeg'
-import hard from '../assets/hard.jpeg'
 
 export default function Home() {
   const context = React.useContext(ImageContext)
-  console.log(context)
   return (
     <div className="flex h-screen w-full flex-col">
       <nav className="flex items-center justify-around bg-slate-800 p-5 text-xl text-white">

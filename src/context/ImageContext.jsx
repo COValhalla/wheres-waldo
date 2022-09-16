@@ -52,7 +52,6 @@ function ImageContextProvider({ children }) {
         console.log(error)
       })
 
-    console.log('hard: ', hardURL)
     addImage('easy', easyURL)
     addImage('medium', mediumURL)
     addImage('hard', hardURL)
