@@ -4,9 +4,50 @@
 import { update } from 'firebase/database'
 import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import ReactModal from 'react-modal'
 import { ImageContext } from '../context/ImageContext'
 
+const customStyles = {
+  overlay: {
+    position: 'fixed',
+    width: '40%',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.0)',
+  },
+  content: {
+    position: 'absolute',
+    float: 'left',
+    left: '50%',
+    top: '50%',
+    marginRight: '-50%',
+    transform: 'translate(50%, -50%)',
+    padding: 0,
+  },
+}
+
+ReactModal.setAppElement(document.getElementById('root'))
+
 export default function Game() {
+  const [modalIsOpen, setIsOpen] = React.useState(false)
+
+  function openModal() {
+    setIsOpen(true)
+  }
+  function closeModal() {
+    setIsOpen(false)
+  }
+  function closeResetModal() {
+    setIsOpen(false)
+    setSelectedData({ x: null, y: null, name: null })
+  }
+  function updateModalLocation(left, top) {
+    customStyles.content.left = left
+    customStyles.content.top = top
+  }
+
   const context = React.useContext(ImageContext)
 
   const location = useLocation()
@@ -28,6 +69,7 @@ export default function Game() {
       ) {
         // Add modal popup for entering leadboard name/score.
         console.log('Found Waldo!')
+        openModal()
       } else {
         // Update nav main to notify did not find
         console.log('Did not find Waldo.')
@@ -95,6 +137,17 @@ export default function Game() {
           alt=""
         />
       </div>
+      <ReactModal
+        isOpen={modalIsOpen}
+        style={customStyles}
+        onRequestClose={closeResetModal}
+        shouldCloseOnOverlayClick
+        shouldCloseonEsc
+      >
+        <div>
+          <h1>The modal should be opened!</h1>
+        </div>
+      </ReactModal>
     </div>
   )
 }
