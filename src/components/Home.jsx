@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import easy from '../assets/easy.jpg'
+import medium from '../assets/medium.jpeg'
+import hard from '../assets/hard.jpeg'
 
 export default function Home() {
   return (
@@ -20,13 +23,37 @@ export default function Home() {
         </button>
       </nav>
       {/* Main background */}
-      <div className="flex flex-1  bg-slate-700 ">
+      <div className="flex flex-1 items-center justify-center gap-4 bg-slate-700 ">
         {/* Cards Container */}
-        <div className="flex justify-center gap-8 text-white ">
-          <button type="button">Easy</button>
-          <button type="button">Medium</button>
-          <button type="button">Hard</button>
-        </div>
+
+        <button
+          style={{
+            backgroundImage: `url(${easy})`,
+          }}
+          className=" h-1/2 w-1/4 scale-90 rounded bg-cover bg-center bg-no-repeat text-3xl font-bold text-black duration-200 hover:scale-100"
+          type="button"
+        >
+          Easy
+        </button>
+
+        <button
+          style={{
+            backgroundImage: `url(${medium})`,
+          }}
+          className="h-1/2 w-1/4 scale-90 rounded bg-cover bg-center bg-no-repeat text-3xl font-bold text-black duration-200 hover:scale-100"
+          type="button"
+        >
+          Medium
+        </button>
+        <button
+          style={{
+            backgroundImage: `url(${hard})`,
+          }}
+          className="h-1/2 w-1/4 scale-90 rounded bg-cover bg-center bg-no-repeat text-3xl font-bold text-black  duration-200 hover:scale-100"
+          type="button"
+        >
+          Hard
+        </button>
       </div>
     </div>
   )
