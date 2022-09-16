@@ -27,13 +27,13 @@ export default function Game() {
         selectedData.y >= context.Coords[mode].topLeft[1]
       ) {
         console.log('Found Waldo!')
-      } else if (selectedData.x === null) {
-        console.log('Not ready to check')
       } else {
         console.log('Did not find Waldo.')
       }
     }
-    checkWin()
+    if (selectedData.x !== null) {
+      checkWin()
+    }
   }, [context.Coords, mode, selectedData])
 
   function calculateClickPercent(event) {
