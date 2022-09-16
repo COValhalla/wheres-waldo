@@ -24,9 +24,24 @@ function ImageContextProvider({ children }) {
     medium: null,
     hard: null,
   })
+  const [Coords, setCoords] = useState(null)
+
+  const myProvider = React.useMemo(
+    () => ({
+      Images,
+      setImages,
+      Coords,
+      setCoords,
+    }),
+    [Images, Coords],
+  )
 
   if (Images.easy === null) {
     retrieveImages()
+  }
+
+  if (Coords === null) {
+    retrieveWinCoords()
   }
 
   function addImage(mode, url) {
@@ -56,9 +71,24 @@ function ImageContextProvider({ children }) {
     addImage('medium', mediumURL)
     addImage('hard', hardURL)
   }
+  async function retrieveWinCoords() {
+    // Retrieve coords from firebase
+    const dbRef = dataRef(database)
+    const retrievedCoords = await get(child(dbRef, `winCoords`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          return snapshot.val()
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+
+    setCoords(retrievedCoords)
+  }
 
   return (
-    <ImageContext.Provider value={Images}>{children}</ImageContext.Provider>
+    <ImageContext.Provider value={myProvider}>{children}</ImageContext.Provider>
   )
 }
 
