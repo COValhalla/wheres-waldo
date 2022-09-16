@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React from 'react'
+import { update } from 'firebase/database'
+import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ImageContext } from '../context/ImageContext'
 
 export default function Game() {
   const context = React.useContext(ImageContext)
-  console.log(context)
 
   const location = useLocation()
   const { mode } = location.state
@@ -18,20 +18,23 @@ export default function Game() {
     name: null,
   })
 
-  function checkResult(data) {
-    // console.log('checking result: ', data)
-
-    if (
-      selectedData.x <= data.jackson.topRight[0] &&
-      selectedData.x >= data.jackson.topLeft[0] &&
-      selectedData.y <= data.jackson.botRight[1] &&
-      selectedData.y >= data.jackson.topLeft[1]
-    ) {
-      console.log('Identified Jackson!')
-    } else {
-      console.log('Did not find Jackson')
+  useEffect(() => {
+    function checkWin() {
+      if (
+        selectedData.x <= context.Coords[mode].topRight[0] &&
+        selectedData.x >= context.Coords[mode].topLeft[0] &&
+        selectedData.y <= context.Coords[mode].botRight[1] &&
+        selectedData.y >= context.Coords[mode].topLeft[1]
+      ) {
+        console.log('Found Waldo!')
+      } else if (selectedData.x === null) {
+        console.log('Not ready to check')
+      } else {
+        console.log('Did not find Waldo.')
+      }
     }
-  }
+    checkWin()
+  }, [context.Coords, mode, selectedData])
 
   function calculateClickPercent(event) {
     const clickPos = [
@@ -51,7 +54,7 @@ export default function Game() {
   }
 
   // Determines client x/y and resulting click position x/y
-  function checkWin(event) {
+  function updateState(event) {
     const posPercent = calculateClickPercent(event)
 
     setSelectedData((prevData) => ({
@@ -59,6 +62,8 @@ export default function Game() {
       x: posPercent[0],
       y: posPercent[1],
     }))
+
+    console.log('Selected Data: ', selectedData)
   }
 
   return (
@@ -84,7 +89,7 @@ export default function Game() {
         <img
           src={context.Images[mode]}
           className="w-5/6 rounded-2xl"
-          onClick={checkWin}
+          onClick={updateState}
           alt=""
         />
       </div>
