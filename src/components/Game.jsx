@@ -146,19 +146,25 @@ export default function Game() {
             Submit your score to the global leaderboard!
           </h4>
           <form className="flex flex-col" action="#">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Username</label>
             <input
-              className="w-3/4 rounded bg-slate-700 px-2"
+              className="w-3/4 rounded bg-slate-700 p-1"
               type="text"
               name="name"
               id="name"
             />
             <div className="my-6 border-b-4"></div>
             <div className="flex justify-end gap-8">
-              <button className="w-1/4 rounded bg-red-500 py-2" type="submit">
+              <button
+                className="w-1/3 rounded bg-red-500 py-2 duration-300 hover:scale-105"
+                type="submit"
+              >
                 Cancel
               </button>
-              <button className="w-1/4 rounded bg-green-600 py-2" type="submit">
+              <button
+                className="w-1/3 rounded bg-green-600 py-2 duration-300 hover:scale-105"
+                type="submit"
+              >
                 Submit Score
               </button>
             </div>
