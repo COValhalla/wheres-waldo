@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import { ImageContext } from '../context/ImageContext'
 
-const customStyles = {
+const modalStyles = {
   overlay: {
     backgroundColor: 'rgba(255, 255, 255, 0.0)',
   },
@@ -25,27 +25,24 @@ const customStyles = {
 ReactModal.setAppElement(document.getElementById('root'))
 
 export default function Game() {
+  const context = React.useContext(ImageContext)
+
+  // To programatically change pages
   const navigate = useNavigate()
+
   const [modalIsOpen, setIsOpen] = React.useState(false)
 
   function openModal() {
     setIsOpen(true)
   }
-  function closeModal() {
-    setIsOpen(false)
-  }
+
   function closeResetModal() {
     setIsOpen(false)
     setSelectedData({ x: null, y: null, name: null })
     navigate('/')
   }
-  function updateModalLocation(left, top) {
-    customStyles.content.left = left
-    customStyles.content.top = top
-  }
 
-  const context = React.useContext(ImageContext)
-
+  // To get selected difficulty from home page
   const location = useLocation()
   const { mode } = location.state
 
@@ -94,7 +91,7 @@ export default function Game() {
   }
 
   // Determines client x/y and resulting click position x/y
-  function updateState(event) {
+  function updateUserSelection(event) {
     const posPercent = calculateClickPercent(event)
 
     setSelectedData((prevData) => ({
@@ -129,13 +126,13 @@ export default function Game() {
         <img
           src={context.Images[mode]}
           className="w-5/6 rounded-2xl"
-          onClick={updateState}
+          onClick={updateUserSelection}
           alt=""
         />
       </div>
       <ReactModal
         isOpen={modalIsOpen}
-        style={customStyles}
+        style={modalStyles}
         onRequestClose={closeResetModal}
         shouldCloseOnOverlayClick
         shouldCloseonEsc
