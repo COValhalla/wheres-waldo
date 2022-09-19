@@ -3,7 +3,7 @@
 
 import { update } from 'firebase/database'
 import React, { useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import { ImageContext } from '../context/ImageContext'
 
@@ -25,6 +25,7 @@ const customStyles = {
 ReactModal.setAppElement(document.getElementById('root'))
 
 export default function Game() {
+  const navigate = useNavigate()
   const [modalIsOpen, setIsOpen] = React.useState(false)
 
   function openModal() {
@@ -36,6 +37,7 @@ export default function Game() {
   function closeResetModal() {
     setIsOpen(false)
     setSelectedData({ x: null, y: null, name: null })
+    navigate('/')
   }
   function updateModalLocation(left, top) {
     customStyles.content.left = left
@@ -156,14 +158,16 @@ export default function Game() {
             <div className="my-6 border-b-4"></div>
             <div className="flex justify-end gap-8">
               <button
+                onClick={closeResetModal}
                 className="w-1/3 rounded bg-red-500 py-2 duration-300 hover:scale-105"
                 type="submit"
               >
                 Cancel
               </button>
+
               <button
                 className="w-1/3 rounded bg-green-600 py-2 duration-300 hover:scale-105"
-                type="submit"
+                type="button"
               >
                 Submit Score
               </button>
