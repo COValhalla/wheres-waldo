@@ -32,14 +32,16 @@ export default function Leaderboard() {
         </Link>
       </nav>
       <div className="flex min-h-screen flex-col bg-slate-700 text-white">
-        <div className="flex justify-center p-8">
+        <div className="flex justify-center gap-4 p-8">
           <button
             type="button"
             onClick={updateMode}
             style={{
               backgroundImage: `url(${context.Images.easy})`,
             }}
-            className="min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
+            className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
+              selectedMode === 'Easy' ? 'scale-100' : ''
+            }`}
           >
             <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
               Easy
@@ -51,7 +53,9 @@ export default function Leaderboard() {
             style={{
               backgroundImage: `url(${context.Images.medium})`,
             }}
-            className="min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
+            className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
+              selectedMode === 'Medium' ? 'scale-100' : ''
+            }`}
           >
             <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
               Medium
@@ -63,7 +67,9 @@ export default function Leaderboard() {
             style={{
               backgroundImage: `url(${context.Images.hard})`,
             }}
-            className="min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100"
+            className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
+              selectedMode === 'Hard' ? 'scale-100' : ''
+            }`}
           >
             <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
               Hard
