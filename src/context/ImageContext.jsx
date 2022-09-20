@@ -1,6 +1,13 @@
 import { initializeApp } from 'firebase/app'
 import { getStorage, ref, getDownloadURL } from 'firebase/storage'
-import { getDatabase, ref as dataRef, child, get } from 'firebase/database'
+import {
+  getDatabase,
+  ref as dataRef,
+  set,
+  child,
+  get,
+  push,
+} from 'firebase/database'
 import React, { createContext, useState } from 'react'
 
 const firebaseConfig = {
@@ -16,8 +23,24 @@ const app = initializeApp(firebaseConfig)
 const storage = getStorage(app)
 const database = getDatabase(app)
 
-const ImageContext = createContext()
+function writeUserData(mode, name, date, time) {
+  // const newRef = database.dataRef(`leaderboard/${mode}/users/`)
+  // set(dataRef(database, `leaderboard/${mode}/users/ + ${name}`), {
+  // date,
+  // name,
+  // time,
+  // })
+  // Create a new post reference with an auto-generated id
+  const leaderRef = dataRef(database, `leaderboard/${mode}/`)
+  const newPostRef = push(leaderRef)
+  set(newPostRef, {
+    date,
+    name,
+    time,
+  })
+}
 
+const ImageContext = createContext()
 function ImageContextProvider({ children }) {
   const [Images, setImages] = useState({
     easy: null,
@@ -92,4 +115,4 @@ function ImageContextProvider({ children }) {
   )
 }
 
-export { ImageContext, ImageContextProvider }
+export { ImageContext, ImageContextProvider, writeUserData }
