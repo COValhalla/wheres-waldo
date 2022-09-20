@@ -55,6 +55,7 @@ export default function Game() {
   })
 
   const [winTime, setWinTime] = React.useState(null)
+  const [foundWaldo, setFoundWaldo] = React.useState(null)
 
   useEffect(() => {
     function checkWin() {
@@ -71,7 +72,7 @@ export default function Game() {
         openModal()
       } else {
         // Update nav main to notify did not find
-        console.log('Did not find Waldo.')
+        setFoundWaldo(false)
       }
     }
     if (coordSelection.x !== null) {
@@ -117,7 +118,10 @@ export default function Game() {
         >
           Home
         </Link>
-        <h1 className="text-2xl">Find Waldo!</h1>
+        {foundWaldo === null && <h1 className="text-2xl">Find Waldo!</h1>}
+        {foundWaldo === false && (
+          <h1 className="text-2xl">Not Waldo, Try Again!</h1>
+        )}
         <Link
           to="/info"
           className="rounded p-1 duration-200 ease-in hover:bg-gray-500"
