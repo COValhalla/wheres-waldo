@@ -7,12 +7,13 @@ export default function Home() {
   return (
     <div className="flex h-screen w-full flex-col">
       <nav className="flex items-center justify-around bg-slate-800 p-5 text-xl text-white">
-        <button
+        <Link
+          to="/leaderboard"
           className="rounded p-1 duration-200 ease-in hover:bg-gray-500"
           type="button"
         >
           Leaderboard
-        </button>
+        </Link>
         <h1 className="text-2xl">Where's Waldo</h1>
         <button
           className="rounded p-1 duration-200 ease-in hover:bg-gray-500"

@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import { update } from 'firebase/database'
 import React, { useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
-import { ImageContext } from '../context/ImageContext'
+import { ImageContext, writeUserData } from '../context/ImageContext'
+import getDate from '../utils/date'
 
 const modalStyles = {
   overlay: {
@@ -54,7 +54,13 @@ export default function Game() {
     name: null,
   })
 
-  const [winTime, setWinTime] = React.useState(null)
+  const [submissionDetails, setSubmissionDetails] = React.useState({
+    mode,
+    name: null,
+    date: getDate(),
+    time: null,
+  })
+
   const [foundWaldo, setFoundWaldo] = React.useState(null)
 
   useEffect(() => {
@@ -68,7 +74,10 @@ export default function Game() {
         // Add modal popup for entering leadboard name/score.
 
         const totalTime = (Date.now() - startTime.current) / 1000
-        setWinTime(totalTime)
+        setSubmissionDetails((prevDetails) => ({
+          ...prevDetails,
+          time: totalTime,
+        }))
         openModal()
       } else {
         // Update nav main to notify did not find
@@ -106,6 +115,26 @@ export default function Game() {
       x: posPercent[0],
       y: posPercent[1],
     }))
+  }
+
+  const handleChange = (event) => {
+    setSubmissionDetails((prevDetails) => ({
+      ...prevDetails,
+      name: event.target.value,
+    }))
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    if (submissionDetails.name) {
+      writeUserData(
+        submissionDetails.mode,
+        submissionDetails.name,
+        submissionDetails.date,
+        submissionDetails.time,
+      )
+      closeResetModal()
+    }
   }
 
   return (
@@ -147,14 +176,18 @@ export default function Game() {
       >
         <div className="flex flex-col bg-slate-800 p-6  text-white">
           <h3 className="border-b-4 text-2xl">
-            You finished in {winTime} seconds!
+            You finished in {submissionDetails.time} seconds!
           </h3>
           <h4 className=" pt-8 text-lg">
             Submit your score to the global leaderboard!
           </h4>
-          <form className="flex flex-col" action="#">
+          <form onSubmit={handleSubmit} className="flex flex-col" action="#">
             <label htmlFor="name">Username</label>
             <input
+              minLength={3}
+              required="required"
+              placeholder="Enter your username"
+              onChange={handleChange}
               className="w-3/4 rounded bg-slate-700 p-1"
               type="text"
               name="name"
@@ -165,14 +198,14 @@ export default function Game() {
               <button
                 onClick={closeResetModal}
                 className="w-1/3 rounded bg-red-500 py-2 duration-300 hover:scale-105"
-                type="submit"
+                type="button"
               >
                 Cancel
               </button>
 
               <button
                 className="w-1/3 rounded bg-green-600 py-2 duration-300 hover:scale-105"
-                type="button"
+                type="submit"
               >
                 Submit Score
               </button>
