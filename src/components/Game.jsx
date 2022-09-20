@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
 import { update } from 'firebase/database'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import { ImageContext } from '../context/ImageContext'
@@ -25,6 +25,8 @@ const modalStyles = {
 ReactModal.setAppElement(document.getElementById('root'))
 
 export default function Game() {
+  const startTime = useRef(Date.now())
+
   const context = React.useContext(ImageContext)
 
   // To programatically change pages
@@ -38,7 +40,7 @@ export default function Game() {
 
   function closeResetModal() {
     setIsOpen(false)
-    setSelectedData({ x: null, y: null, name: null })
+    setcoordSelection({ x: null, y: null, name: null })
     navigate('/')
   }
 
@@ -46,32 +48,36 @@ export default function Game() {
   const location = useLocation()
   const { mode } = location.state
 
-  const [selectedData, setSelectedData] = React.useState({
+  const [coordSelection, setcoordSelection] = React.useState({
     x: null,
     y: null,
     name: null,
   })
 
+  const [winTime, setWinTime] = React.useState(null)
+
   useEffect(() => {
     function checkWin() {
       if (
-        selectedData.x <= context.Coords[mode].topRight[0] &&
-        selectedData.x >= context.Coords[mode].topLeft[0] &&
-        selectedData.y <= context.Coords[mode].botRight[1] &&
-        selectedData.y >= context.Coords[mode].topLeft[1]
+        coordSelection.x <= context.Coords[mode].topRight[0] &&
+        coordSelection.x >= context.Coords[mode].topLeft[0] &&
+        coordSelection.y <= context.Coords[mode].botRight[1] &&
+        coordSelection.y >= context.Coords[mode].topLeft[1]
       ) {
         // Add modal popup for entering leadboard name/score.
-        console.log('Found Waldo!')
+
+        const totalTime = (Date.now() - startTime.current) / 1000
+        setWinTime(totalTime)
         openModal()
       } else {
         // Update nav main to notify did not find
         console.log('Did not find Waldo.')
       }
     }
-    if (selectedData.x !== null) {
+    if (coordSelection.x !== null) {
       checkWin()
     }
-  }, [context.Coords, mode, selectedData])
+  }, [context.Coords, mode, coordSelection])
 
   function calculateClickPercent(event) {
     const clickPos = [
@@ -94,13 +100,11 @@ export default function Game() {
   function updateUserSelection(event) {
     const posPercent = calculateClickPercent(event)
 
-    setSelectedData((prevData) => ({
+    setcoordSelection((prevData) => ({
       ...prevData,
       x: posPercent[0],
       y: posPercent[1],
     }))
-
-    console.log('Selected Data: ', selectedData)
   }
 
   return (
@@ -139,7 +143,7 @@ export default function Game() {
       >
         <div className="flex flex-col bg-slate-800 p-6  text-white">
           <h3 className="border-b-4 text-2xl">
-            You finished in 10.03 seconds!
+            You finished in {winTime} seconds!
           </h3>
           <h4 className=" pt-8 text-lg">
             Submit your score to the global leaderboard!
