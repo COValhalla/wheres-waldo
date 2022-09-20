@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import Game from './components/Game'
 import Info from './components/Info'
+import Leaderboard from './components/Leaderboard'
 import { ImageContextProvider } from './context/ImageContext'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/game" element={<Game />} />
             <Route path="/info" element={<Info />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
           </Routes>
         </div>
       </BrowserRouter>
