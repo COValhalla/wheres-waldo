@@ -81,6 +81,24 @@ export default function Leaderboard() {
             {selectedMode}
           </div>
         )}
+        <table className=" mx-auto my-8 w-5/6 border-2">
+          <thead className="border-2 bg-slate-800 text-lg font-bold">
+            <tr className="">
+              <th>Place</th>
+              <th>Name</th>
+              <th>Time (seconds)</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="text-center">
+              <td>1</td>
+              <td>Joe</td>
+              <td>12.123</td>
+              <td>9/22/2022</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   )
