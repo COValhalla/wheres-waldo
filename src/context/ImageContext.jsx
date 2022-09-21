@@ -1,4 +1,6 @@
 import { initializeApp } from 'firebase/app'
+import { getFirestore, collection, addDoc } from 'firebase/firestore'
+
 import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 import {
   getDatabase,
@@ -7,15 +9,16 @@ import {
   child,
   get,
   push,
+  onValue,
 } from 'firebase/database'
 import React, { createContext, useState } from 'react'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA69h9jNghUE7H6x3BzECQbLybPAkLNihc',
   authDomain: 'wheres-waldo-6b3b4.firebaseapp.com',
+  databaseURL: 'https://wheres-waldo-6b3b4-default-rtdb.firebaseio.com',
   projectId: 'wheres-waldo-6b3b4',
-  storageBucket: 'gs://wheres-waldo-6b3b4.appspot.com/',
-  databaseURL: 'https://wheres-waldo-6b3b4-default-rtdb.firebaseio.com/',
+  storageBucket: 'wheres-waldo-6b3b4.appspot.com',
   messagingSenderId: '680463319079',
   appId: '1:680463319079:web:6635a772da8918eee98e02',
 }
@@ -23,19 +26,13 @@ const app = initializeApp(firebaseConfig)
 const storage = getStorage(app)
 const database = getDatabase(app)
 
-function writeUserData(mode, name, date, time) {
-  // const newRef = database.dataRef(`leaderboard/${mode}/users/`)
-  // set(dataRef(database, `leaderboard/${mode}/users/ + ${name}`), {
-  // date,
-  // name,
-  // time,
-  // })
-  // Create a new post reference with an auto-generated id
-  const leaderRef = dataRef(database, `leaderboard/${mode}/`)
-  const newPostRef = push(leaderRef)
-  set(newPostRef, {
-    date,
+const db = getFirestore(app)
+
+async function writeUserData(mode, name, date, time) {
+  const myDocPath = `leaderboard/${mode}/scores     `
+  const docRef = await addDoc(collection(db, myDocPath), {
     name,
+    date,
     time,
   })
 }
@@ -115,4 +112,4 @@ function ImageContextProvider({ children }) {
   )
 }
 
-export { ImageContext, ImageContextProvider, writeUserData }
+export { ImageContext, ImageContextProvider, writeUserData, database }
