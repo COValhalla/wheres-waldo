@@ -1,13 +1,43 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ImageContext } from '../context/ImageContext'
+import { collection, orderBy, onSnapshot, query } from 'firebase/firestore'
+import { ImageContext, db } from '../context/ImageContext'
 
 export default function Leaderboard() {
   const context = React.useContext(ImageContext)
   const [selectedMode, setSelectedMode] = React.useState(null)
+  const [leaderboard, setLeaderboard] = React.useState(null)
 
   function updateMode(event) {
-    setSelectedMode(event.target.childNodes[0].textContent)
+    setSelectedMode(event.target.childNodes[0].textContent.toLowerCase())
+  }
+
+  // Retrieves ordered scores, updates on changes
+  const leaderboardRef = collection(db, 'leaderboard')
+  const q = query(leaderboardRef, orderBy('time'))
+  onSnapshot(q, (snapshot) => {
+    const results = {
+      easy: [],
+      medium: [],
+      hard: [],
+    }
+    snapshot.docs.forEach((doc) => {
+      const { mode } = doc.data()
+      results[mode].push({ ...doc.data(), id: doc.id })
+    })
+    setLeaderboard(results)
+  })
+
+  let scores
+  if (leaderboard !== null && selectedMode !== null) {
+    scores = leaderboard[selectedMode].map((score, index) => (
+      <tr key={score.id} className="text-center">
+        <td>{index + 1}</td>
+        <td>{score.name}</td>
+        <td>{score.time}</td>
+        <td>{score.date}</td>
+      </tr>
+    ))
   }
 
   return (
@@ -77,7 +107,7 @@ export default function Leaderboard() {
           </button>
         </div>
         {selectedMode !== null && (
-          <div className="mx-auto rounded-md bg-blue-800 px-4 py-2">
+          <div className="mx-auto rounded-md bg-blue-900 px-4 py-2">
             {selectedMode}
           </div>
         )}
@@ -90,14 +120,7 @@ export default function Leaderboard() {
               <th>Date</th>
             </tr>
           </thead>
-          <tbody>
-            <tr className="text-center">
-              <td>1</td>
-              <td>Joe</td>
-              <td>12.123</td>
-              <td>9/22/2022</td>
-            </tr>
-          </tbody>
+          <tbody>{scores}</tbody>
         </table>
       </div>
     </div>

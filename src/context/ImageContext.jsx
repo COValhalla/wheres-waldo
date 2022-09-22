@@ -1,16 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, addDoc } from 'firebase/firestore'
-
 import { getStorage, ref, getDownloadURL } from 'firebase/storage'
-import {
-  getDatabase,
-  ref as dataRef,
-  set,
-  child,
-  get,
-  push,
-  onValue,
-} from 'firebase/database'
+import { getDatabase, ref as dataRef, child, get } from 'firebase/database'
 import React, { createContext, useState } from 'react'
 
 const firebaseConfig = {
@@ -29,11 +20,11 @@ const database = getDatabase(app)
 const db = getFirestore(app)
 
 async function writeUserData(mode, name, date, time) {
-  const myDocPath = `leaderboard/${mode}/scores     `
-  const docRef = await addDoc(collection(db, myDocPath), {
+  await addDoc(collection(db, '/leaderboard'), {
     name,
     date,
     time,
+    mode,
   })
 }
 
@@ -112,4 +103,4 @@ function ImageContextProvider({ children }) {
   )
 }
 
-export { ImageContext, ImageContextProvider, writeUserData, database }
+export { ImageContext, ImageContextProvider, writeUserData, db }
