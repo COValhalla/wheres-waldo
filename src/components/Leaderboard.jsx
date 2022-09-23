@@ -5,14 +5,15 @@ import { DatabaseContext, database } from '../context/DatabaseContext'
 
 export default function Leaderboard() {
   const context = React.useContext(DatabaseContext)
-  const [selectedMode, setSelectedMode] = React.useState(null)
+
+  const [selectedMode, setSelectedMode] = React.useState('easy')
   const [leaderboard, setLeaderboard] = React.useState(null)
 
   function updateMode(event) {
     setSelectedMode(event.target.childNodes[0].textContent.toLowerCase())
   }
 
-  // Retrieves ordered scores, updates on changes
+  // Retrieves scores from firebase
   const leaderboardRef = collection(database, 'leaderboard')
   const q = query(leaderboardRef, orderBy('time'))
   onSnapshot(q, (snapshot) => {
@@ -70,7 +71,7 @@ export default function Leaderboard() {
               backgroundImage: `url(${context.Images.easy})`,
             }}
             className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
-              selectedMode === 'Easy' ? 'scale-100' : ''
+              selectedMode === 'easy' ? 'scale-100' : ''
             }`}
           >
             <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
@@ -84,7 +85,7 @@ export default function Leaderboard() {
               backgroundImage: `url(${context.Images.medium})`,
             }}
             className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
-              selectedMode === 'Medium' ? 'scale-100' : ''
+              selectedMode === 'medium' ? 'scale-100' : ''
             }`}
           >
             <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
@@ -98,7 +99,7 @@ export default function Leaderboard() {
               backgroundImage: `url(${context.Images.hard})`,
             }}
             className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
-              selectedMode === 'Hard' ? 'scale-100' : ''
+              selectedMode === 'hard' ? 'scale-100' : ''
             }`}
           >
             <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
@@ -111,17 +112,19 @@ export default function Leaderboard() {
             {selectedMode}
           </div>
         )}
-        <table className=" mx-auto my-8 w-5/6 border-2">
-          <thead className="border-2 bg-slate-800 text-lg font-bold">
-            <tr className="">
-              <th>Place</th>
-              <th>Name</th>
-              <th>Time (seconds)</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>{scores}</tbody>
-        </table>
+        {selectedMode !== null && (
+          <table className=" mx-auto my-8 w-5/6 border-2">
+            <thead className="border-2 bg-slate-800 text-lg font-bold">
+              <tr className="">
+                <th>Place</th>
+                <th>Name</th>
+                <th>Time (seconds)</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>{scores}</tbody>
+          </table>
+        )}
       </div>
     </div>
   )

@@ -13,10 +13,10 @@ const firebaseConfig = {
   appId: '1:680463319079:web:6635a772da8918eee98e02',
 }
 const app = initializeApp(firebaseConfig)
-const storage = getStorage(app)
+const imageStorage = getStorage(app)
 const database = getFirestore(app)
 
-async function writeUserData(mode, name, date, time) {
+async function writeScores(mode, name, date, time) {
   await addDoc(collection(database, '/leaderboard'), {
     name,
     date,
@@ -26,12 +26,14 @@ async function writeUserData(mode, name, date, time) {
 }
 
 const DatabaseContext = createContext()
+
 function DatabaseContextProvider({ children }) {
   const [Images, setImages] = useState({
     easy: null,
     medium: null,
     hard: null,
   })
+
   const [Coords, setCoords] = useState(null)
 
   const myProvider = React.useMemo(
@@ -57,19 +59,19 @@ function DatabaseContextProvider({ children }) {
   }
 
   async function retrieveImages() {
-    const easyURL = await getDownloadURL(ref(storage, 'easy.jpg'))
+    const easyURL = await getDownloadURL(ref(imageStorage, 'easy.jpg'))
       .then((url) => url)
       .catch((error) => {
         console.log(error)
       })
 
-    const mediumURL = await getDownloadURL(ref(storage, 'medium.jpeg'))
+    const mediumURL = await getDownloadURL(ref(imageStorage, 'medium.jpeg'))
       .then((url) => url)
       .catch((error) => {
         console.log(error)
       })
 
-    const hardURL = await getDownloadURL(ref(storage, 'hard.jpeg'))
+    const hardURL = await getDownloadURL(ref(imageStorage, 'hard.jpeg'))
       .then((url) => url)
       .catch((error) => {
         console.log(error)
@@ -96,4 +98,4 @@ function DatabaseContextProvider({ children }) {
   )
 }
 
-export { DatabaseContext, DatabaseContextProvider, writeUserData, database }
+export { DatabaseContext, DatabaseContextProvider, writeScores, database }

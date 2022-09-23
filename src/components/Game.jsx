@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
-import { DatabaseContext, writeUserData } from '../context/DatabaseContext'
+import { DatabaseContext, writeScores } from '../context/DatabaseContext'
 import getDate from '../utils/date'
 
 const modalStyles = {
@@ -127,7 +127,7 @@ export default function Game() {
   const handleSubmit = (event) => {
     event.preventDefault()
     if (submissionDetails.name) {
-      writeUserData(
+      writeScores(
         submissionDetails.mode,
         submissionDetails.name,
         submissionDetails.date,
