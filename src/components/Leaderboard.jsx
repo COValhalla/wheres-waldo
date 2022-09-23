@@ -88,7 +88,7 @@ export default function Leaderboard() {
               selectedMode === 'easy' ? 'scale-100' : ''
             }`}
           >
-            <p className="tex- text-center text-3xl font-bold text-white ">
+            <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:1px_theme(colors.black)] ">
               Easy
             </p>
           </button>
