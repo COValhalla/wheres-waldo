@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { collection, orderBy, onSnapshot, query } from 'firebase/firestore'
 import { DatabaseContext, database } from '../context/DatabaseContext'
+import home from '../assets/icons/home-icon.svg'
+import info from '../assets/icons/info-icon.svg'
 
 export default function Leaderboard() {
   const context = React.useContext(DatabaseContext)
@@ -43,34 +45,46 @@ export default function Leaderboard() {
 
   return (
     <div className="flex flex-col">
-      <nav className="flex items-center justify-around bg-slate-800 p-5 text-xl text-white">
+      <nav className="flex items-center justify-around bg-slate-800 p-5 text-lg text-white sm:text-xl">
         <Link
           to="/"
-          className="rounded p-1 duration-200 ease-in hover:bg-gray-500"
+          className="hidden rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:block"
           type="button"
         >
           Home
         </Link>
-
-        <h1 className="text-2xl">Leaderboard</h1>
-
+        <Link
+          to="/"
+          className="rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:hidden"
+          type="button"
+        >
+          <img className="w-3/4 invert" src={home} alt="leaderboard-icon" />
+        </Link>
+        Leaderboard
         <Link
           to="/info"
-          className="rounded p-1 text-white duration-200 ease-in hover:bg-gray-500"
+          className="hidden rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:block"
           type="button"
         >
           Info
         </Link>
+        <Link
+          to="/info"
+          className="rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:hidden"
+          type="button"
+        >
+          <img className="w-3/4 invert" src={info} alt="leaderboard-icon" />
+        </Link>
       </nav>
       <div className="flex min-h-screen flex-col bg-slate-700 text-white">
-        <div className="flex justify-center gap-4 p-8">
+        <div className="flex flex-col justify-center gap-4 p-8 sm:flex-row">
           <button
             type="button"
             onClick={updateMode}
             style={{
               backgroundImage: `url(${context.Images.easy})`,
             }}
-            className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
+            className={`min-h-[10vh] scale-95 rounded bg-cover bg-center bg-no-repeat duration-300 hover:scale-100  sm:min-h-[25vh] sm:min-w-[25vw] ${
               selectedMode === 'easy' ? 'scale-100' : ''
             }`}
           >
@@ -84,7 +98,7 @@ export default function Leaderboard() {
             style={{
               backgroundImage: `url(${context.Images.medium})`,
             }}
-            className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
+            className={`min-h-[10vh] scale-95 rounded bg-cover bg-center bg-no-repeat duration-300 hover:scale-100  sm:min-h-[25vh] sm:min-w-[25vw] ${
               selectedMode === 'medium' ? 'scale-100' : ''
             }`}
           >
@@ -98,8 +112,8 @@ export default function Leaderboard() {
             style={{
               backgroundImage: `url(${context.Images.hard})`,
             }}
-            className={`min-h-[25vh] min-w-[25vw] scale-95 rounded bg-cover bg-center bg-no-repeat  duration-300 hover:scale-100 ${
-              selectedMode === 'hard' ? 'scale-100' : ''
+            className={`min-h-[10vh] scale-95 rounded bg-cover bg-center bg-no-repeat duration-300 hover:scale-100  sm:min-h-[25vh] sm:min-w-[25vw] ${
+              selectedMode === 'easy' ? 'scale-100' : ''
             }`}
           >
             <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
@@ -113,8 +127,8 @@ export default function Leaderboard() {
           </div>
         )}
         {selectedMode !== null && (
-          <table className=" mx-auto my-8 w-5/6 border-2">
-            <thead className="border-2 bg-slate-800 text-lg font-bold">
+          <table className="mx-auto my-8  border-2">
+            <thead className="border-2 bg-slate-800 text-sm font-bold sm:text-lg">
               <tr className="">
                 <th>Place</th>
                 <th>Name</th>

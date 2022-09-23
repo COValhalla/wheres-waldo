@@ -6,6 +6,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import { DatabaseContext, writeScores } from '../context/DatabaseContext'
 import getDate from '../utils/date'
+import home from '../assets/icons/home-icon.svg'
+import info from '../assets/icons/info-icon.svg'
 
 const modalStyles = {
   overlay: {
@@ -142,27 +144,41 @@ export default function Game() {
       <nav className="flex items-center justify-around bg-slate-800 p-5 text-xl text-white">
         <Link
           to="/"
-          className="rounded p-1 duration-200 ease-in hover:bg-gray-500"
+          className="hidden rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:block"
           type="button"
         >
           Home
         </Link>
-        {foundWaldo === null && <h1 className="text-2xl">Find Waldo!</h1>}
+        <Link
+          to="/"
+          className="rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:hidden"
+          type="button"
+        >
+          <img className="w-3/4 invert" src={home} alt="leaderboard-icon" />
+        </Link>
+        {foundWaldo === null && <h1 className="sm:text-2xl">Find Waldo!</h1>}
         {foundWaldo === false && (
-          <h1 className="text-2xl">Not Waldo, Try Again!</h1>
+          <h1 className="sm:text-2xl">Not Waldo, Try Again!</h1>
         )}
         <Link
           to="/info"
-          className="rounded p-1 duration-200 ease-in hover:bg-gray-500"
+          className="hidden rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:block"
           type="button"
         >
           Info
+        </Link>
+        <Link
+          to="/info"
+          className="rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:hidden"
+          type="button"
+        >
+          <img className="w-3/4 invert" src={info} alt="leaderboard-icon" />
         </Link>
       </nav>
       <div className="flex min-h-screen flex-col items-center gap-8 bg-slate-700 py-8">
         <img
           src={context.Images[mode]}
-          className="w-5/6 rounded-2xl"
+          className="rounded-2xl sm:w-5/6"
           onClick={updateUserSelection}
           alt=""
         />
@@ -185,6 +201,7 @@ export default function Game() {
             <label htmlFor="name">Username</label>
             <input
               minLength={3}
+              maxLength={10}
               required="required"
               placeholder="Enter your username"
               onChange={handleChange}
