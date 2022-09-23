@@ -6,11 +6,11 @@ import Home from './components/Home'
 import Game from './components/Game'
 import Info from './components/Info'
 import Leaderboard from './components/Leaderboard'
-import { ImageContextProvider } from './context/ImageContext'
+import { DatabaseContextProvider } from './context/DatabaseContext'
 
 function App() {
   return (
-    <ImageContextProvider>
+    <DatabaseContextProvider>
       <BrowserRouter>
         <div>
           <Routes>
@@ -21,7 +21,7 @@ function App() {
           </Routes>
         </div>
       </BrowserRouter>
-    </ImageContextProvider>
+    </DatabaseContextProvider>
   )
 }
 

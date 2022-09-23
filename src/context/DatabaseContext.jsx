@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, collection, addDoc } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore'
 import { getStorage, ref, getDownloadURL } from 'firebase/storage'
-import { getDatabase, ref as dataRef, child, get } from 'firebase/database'
 import React, { createContext, useState } from 'react'
 
 const firebaseConfig = {
@@ -15,12 +14,10 @@ const firebaseConfig = {
 }
 const app = initializeApp(firebaseConfig)
 const storage = getStorage(app)
-const database = getDatabase(app)
-
-const db = getFirestore(app)
+const database = getFirestore(app)
 
 async function writeUserData(mode, name, date, time) {
-  await addDoc(collection(db, '/leaderboard'), {
+  await addDoc(collection(database, '/leaderboard'), {
     name,
     date,
     time,
@@ -28,8 +25,8 @@ async function writeUserData(mode, name, date, time) {
   })
 }
 
-const ImageContext = createContext()
-function ImageContextProvider({ children }) {
+const DatabaseContext = createContext()
+function DatabaseContextProvider({ children }) {
   const [Images, setImages] = useState({
     easy: null,
     medium: null,
@@ -82,25 +79,21 @@ function ImageContextProvider({ children }) {
     addImage('medium', mediumURL)
     addImage('hard', hardURL)
   }
-  async function retrieveWinCoords() {
-    // Retrieve coords from firebase
-    const dbRef = dataRef(database)
-    const retrievedCoords = await get(child(dbRef, `winCoords`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          return snapshot.val()
-        }
-      })
-      .catch((error) => {
-        console.error(error)
-      })
 
-    setCoords(retrievedCoords)
+  async function retrieveWinCoords() {
+    const querySnapshot = await getDocs(collection(database, 'winCoords'))
+    const results = { easy: [], medium: [], hard: [] }
+    querySnapshot.forEach((doc) => {
+      results[doc.id] = doc.data()
+    })
+    setCoords(results)
   }
 
   return (
-    <ImageContext.Provider value={myProvider}>{children}</ImageContext.Provider>
+    <DatabaseContext.Provider value={myProvider}>
+      {children}
+    </DatabaseContext.Provider>
   )
 }
 
-export { ImageContext, ImageContextProvider, writeUserData, db }
+export { DatabaseContext, DatabaseContextProvider, writeUserData, database }

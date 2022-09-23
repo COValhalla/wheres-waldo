@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ImageContext } from '../context/ImageContext'
+import { DatabaseContext } from '../context/DatabaseContext'
 
 export default function Home() {
-  const context = React.useContext(ImageContext)
+  const context = React.useContext(DatabaseContext)
   return (
     <div className="flex h-screen w-full flex-col">
       <nav className="flex items-center justify-around bg-slate-800 p-5 text-xl text-white">

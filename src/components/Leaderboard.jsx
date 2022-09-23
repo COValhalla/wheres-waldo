@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { collection, orderBy, onSnapshot, query } from 'firebase/firestore'
-import { ImageContext, db } from '../context/ImageContext'
+import { DatabaseContext, database } from '../context/DatabaseContext'
 
 export default function Leaderboard() {
-  const context = React.useContext(ImageContext)
+  const context = React.useContext(DatabaseContext)
   const [selectedMode, setSelectedMode] = React.useState(null)
   const [leaderboard, setLeaderboard] = React.useState(null)
 
@@ -13,7 +13,7 @@ export default function Leaderboard() {
   }
 
   // Retrieves ordered scores, updates on changes
-  const leaderboardRef = collection(db, 'leaderboard')
+  const leaderboardRef = collection(database, 'leaderboard')
   const q = query(leaderboardRef, orderBy('time'))
   onSnapshot(q, (snapshot) => {
     const results = {
