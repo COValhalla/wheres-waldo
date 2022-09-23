@@ -158,7 +158,7 @@ export default function Game() {
         </Link>
         {foundWaldo === null && <h1 className="sm:text-2xl">Find Waldo!</h1>}
         {foundWaldo === false && (
-          <h1 className="sm:text-2xl">Not Waldo, Try Again!</h1>
+          <h1 className="text-base sm:text-2xl">Not Waldo, Try Again!</h1>
         )}
         <Link
           to="/info"
@@ -190,11 +190,11 @@ export default function Game() {
         shouldCloseOnOverlayClick
         shouldCloseonEsc
       >
-        <div className="flex flex-col bg-slate-800 p-6  text-white">
-          <h3 className="border-b-4 text-2xl">
+        <div className="flex flex-col bg-slate-800 p-1 text-white sm:p-6">
+          <h3 className="border-b-4 sm:text-2xl">
             You finished in {submissionDetails.time} seconds!
           </h3>
-          <h4 className=" pt-8 text-lg">
+          <h4 className="pt-4 text-sm sm:text-lg">
             Submit your score to the global leaderboard!
           </h4>
           <form onSubmit={handleSubmit} className="flex flex-col" action="#">
@@ -205,23 +205,23 @@ export default function Game() {
               required="required"
               placeholder="Enter your username"
               onChange={handleChange}
-              className="w-3/4 rounded bg-slate-700 p-1"
+              className="w-3/4 rounded bg-slate-700 p-1 text-sm sm:text-base"
               type="text"
               name="name"
               id="name"
             />
             <div className="my-6 border-b-4"></div>
-            <div className="flex justify-end gap-8">
+            <div className="flex justify-end gap-8 pb-1">
               <button
                 onClick={closeResetModal}
-                className="w-1/3 rounded bg-red-500 py-2 duration-300 hover:scale-105"
+                className="w-1/3 rounded bg-red-500 py-4 text-sm duration-300 hover:scale-105"
                 type="button"
               >
                 Cancel
               </button>
 
               <button
-                className="w-1/3 rounded bg-green-600 py-2 duration-300 hover:scale-105"
+                className="w-1/3 rounded bg-green-600  text-sm duration-300 hover:scale-105"
                 type="submit"
               >
                 Submit Score

@@ -113,7 +113,7 @@ export default function Leaderboard() {
               backgroundImage: `url(${context.Images.hard})`,
             }}
             className={`min-h-[10vh] scale-95 rounded bg-cover bg-center bg-no-repeat duration-300 hover:scale-100  sm:min-h-[25vh] sm:min-w-[25vw] ${
-              selectedMode === 'easy' ? 'scale-100' : ''
+              selectedMode === 'hard' ? 'scale-100' : ''
             }`}
           >
             <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
