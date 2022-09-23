@@ -4,10 +4,13 @@
 import React, { useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
+import Filter from 'bad-words'
 import { DatabaseContext, writeScores } from '../context/DatabaseContext'
 import getDate from '../utils/date'
 import home from '../assets/icons/home-icon.svg'
 import info from '../assets/icons/info-icon.svg'
+
+const filter = new Filter()
 
 const modalStyles = {
   overlay: {
@@ -124,11 +127,20 @@ export default function Game() {
       ...prevDetails,
       name: event.target.value,
     }))
+
+    if (filter.isProfane(event.target.value)) {
+      event.target.setCustomValidity('No profanity allowed')
+    } else {
+      event.target.setCustomValidity('')
+    }
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    if (submissionDetails.name) {
+    if (
+      submissionDetails.name &&
+      filter.isProfane(submissionDetails.name) === false
+    ) {
       writeScores(
         submissionDetails.mode,
         submissionDetails.name,
@@ -136,6 +148,8 @@ export default function Game() {
         submissionDetails.time,
       )
       closeResetModal()
+    } else if (filter.isProfane(submissionDetails)) {
+      event.target.reportValidity()
     }
   }
 
