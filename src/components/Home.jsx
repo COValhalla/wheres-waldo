@@ -56,7 +56,7 @@ export default function Home() {
           to="/game"
           state={{ mode: 'easy' }}
         >
-          <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+          <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:1px_theme(colors.black)]">
             Easy
           </p>
         </Link>
@@ -68,7 +68,7 @@ export default function Home() {
           to="/game"
           state={{ mode: 'medium' }}
         >
-          <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+          <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:1px_theme(colors.black)]">
             Medium
           </p>
         </Link>
@@ -80,7 +80,7 @@ export default function Home() {
           to="/game"
           state={{ mode: 'hard' }}
         >
-          <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+          <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:1px_theme(colors.black)]">
             Hard
           </p>
         </Link>

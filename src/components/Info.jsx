@@ -36,7 +36,7 @@ export default function Info() {
         </Link>
 
         <Link
-          to="/info"
+          to="/"
           className="rounded p-1 duration-200 ease-in hover:bg-gray-500 sm:hidden"
           type="button"
         >
@@ -49,7 +49,7 @@ export default function Info() {
             This project was make by{' '}
             <a className="font-bold" href="https://github.com/COValhalla">
               COValhalla
-            </a>
+            </a>{' '}
             for The Odin Project
           </h1>
           <ul className="list-disc px-3 py-3 text-xs sm:text-base">

@@ -88,7 +88,7 @@ export default function Leaderboard() {
               selectedMode === 'easy' ? 'scale-100' : ''
             }`}
           >
-            <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+            <p className="tex- text-center text-3xl font-bold text-white ">
               Easy
             </p>
           </button>
@@ -102,7 +102,7 @@ export default function Leaderboard() {
               selectedMode === 'medium' ? 'scale-100' : ''
             }`}
           >
-            <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+            <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:1px_theme(colors.black)]">
               Medium
             </p>
           </button>
@@ -116,7 +116,7 @@ export default function Leaderboard() {
               selectedMode === 'hard' ? 'scale-100' : ''
             }`}
           >
-            <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:3px_theme(colors.black)]">
+            <p className="text-center text-3xl font-bold text-white [-webkit-text-stroke:1px_theme(colors.black)]">
               Hard
             </p>
           </button>
