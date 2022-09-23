@@ -56,6 +56,7 @@ export default function Info() {
             <li>Front-end built using TailwindCSS and React</li>
             <li>Firebase-firestore utilized for back-end</li>
             <li>Automatic updating global leaderboard for each game mode</li>
+            <li>Profanity filter for leaderboard submissions.</li>
           </ul>
         </div>
       </div>
