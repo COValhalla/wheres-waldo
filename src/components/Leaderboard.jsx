@@ -127,7 +127,7 @@ export default function Leaderboard() {
           </div>
         )}
         {selectedMode !== null && (
-          <table className="mx-auto my-8  border-2">
+          <table className="mx-auto my-8 border-2">
             <thead className="border-2 bg-slate-800 text-sm font-bold sm:text-lg">
               <tr className="">
                 <th>Place</th>

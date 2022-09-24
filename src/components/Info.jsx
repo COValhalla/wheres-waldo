@@ -46,7 +46,7 @@ export default function Info() {
       <div className="flex flex-1 flex-col justify-center gap-4 bg-slate-700 sm:flex-row ">
         <div className="m-4 h-fit bg-slate-800 py-4 px-8 text-white">
           <h1 className="text-sm sm:text-lg">
-            This project was make by{' '}
+            This project was made by{' '}
             <a className="font-bold" href="https://github.com/COValhalla">
               COValhalla
             </a>{' '}
