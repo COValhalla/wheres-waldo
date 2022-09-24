@@ -1,6 +1,6 @@
 # Where's Waldo (Photo Tagging App)
 
-A basic Where's Waldo game with a tutorial, beginner, and hard modes.
+A basic Where's Waldo game with easy, medium, and hard modes.
 
 Live Preview: https://wheres-waldo-6b3b4.web.app/
 
