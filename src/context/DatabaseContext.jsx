@@ -2,16 +2,10 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore'
 import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 import React, { createContext, useState } from 'react'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyA69h9jNghUE7H6x3BzECQbLybPAkLNihc',
-  authDomain: 'wheres-waldo-6b3b4.firebaseapp.com',
-  databaseURL: 'https://wheres-waldo-6b3b4-default-rtdb.firebaseio.com',
-  projectId: 'wheres-waldo-6b3b4',
-  storageBucket: 'wheres-waldo-6b3b4.appspot.com',
-  messagingSenderId: '680463319079',
-  appId: '1:680463319079:web:6635a772da8918eee98e02',
-}
+const firebaseConfig = JSON.parse(process.env.firebaseConfig)
 const app = initializeApp(firebaseConfig)
 const imageStorage = getStorage(app)
 const database = getFirestore(app)
